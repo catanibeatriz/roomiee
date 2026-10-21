@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Roomiee",
+    "slug": "roomiee",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "roomiee",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.roomiee",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "app.roomiee",
+      "versionCode": 1
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Roomiee",
+      "shortName": "Roomiee",
+      "themeColor": "#4DA3FF",
+      "backgroundColor": "#F6F8FF"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Roomiee uses your photos to scan receipts and split expenses.",
+          "cameraPermission": "Roomiee uses your camera to scan receipts and split expenses."
+        }
+      ],
+      "expo-asset",
+      "expo-font",
+      "expo-splash-screen",
+      "expo-status-bar",
+      "expo-web-browser"
+    ]
+  }
+}

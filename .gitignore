@@ -1,0 +1,19 @@
+node_modules/
+.expo/
+dist/
+web-build/
+*.log
+
+# secrets — never commit real keys
+.env
+.env.local
+.env.*.local
+
+# native builds
+ios/
+android/
+*.ipa
+*.apk
+*.aab
+
+.DS_Store
