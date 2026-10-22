@@ -8,14 +8,16 @@ import { Colors, Radius, Shadow, Pastel, PastelName } from '@/lib/theme';
 import Avatar from '@/components/Avatar';
 import Card from '@/components/Card';
 import Logo from '@/components/Logo';
+import QuickExpense from '@/components/QuickExpense';
+import InviteCard from '@/components/InviteCard';
 
 const QUICK: { label: string; emoji: string; route: string; tone: PastelName }[] = [
-  { label: 'Expense',   emoji: '💸', route: '/(tabs)/expenses', tone: 'sky' },
-  { label: 'Bills',     emoji: '🧾', route: '/bills',           tone: 'butter' },
-  { label: 'Settle up', emoji: '🤝', route: '/settle',          tone: 'mint' },
-  { label: 'Shopping',  emoji: '🛒', route: '/(tabs)/shopping', tone: 'peach' },
-  { label: 'Food',      emoji: '🍜', route: '/(tabs)/food',     tone: 'rose' },
-  { label: 'Chores',    emoji: '🧽', route: '/(tabs)/chores',   tone: 'lavender' },
+  { label: 'Expense',   emoji: '💸', route: '/app/expenses', tone: 'sky' },
+  { label: 'Bills',     emoji: '🧾', route: '/app/bills',           tone: 'butter' },
+  { label: 'Settle up', emoji: '🤝', route: '/app/settle',          tone: 'mint' },
+  { label: 'Shopping',  emoji: '🛒', route: '/app/shopping', tone: 'peach' },
+  { label: 'Food',      emoji: '🍜', route: '/app/food',     tone: 'rose' },
+  { label: 'Chores',    emoji: '🧽', route: '/app/chores',   tone: 'lavender' },
 ];
 
 function greeting() {
@@ -54,14 +56,19 @@ export default function HomeScreen() {
           <Text style={styles.name}>Hi, {currentUser.name}!</Text>
         </View>
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.iconBtn} onPress={() => router.push('/settings')}>
+          <TouchableOpacity style={styles.iconBtn} onPress={() => router.push('/app/settings')}>
             <Ionicons name="settings-outline" size={20} color={Colors.text} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.push('/settings')}>
+          <TouchableOpacity onPress={() => router.push('/app/settings')}>
             <Avatar roommate={currentUser} size={44} ring />
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Core feature: add an expense */}
+      <QuickExpense />
+
+      {roommates.length <= 1 && <InviteCard />}
 
       {/* House card with cover photo */}
       <View style={styles.houseCard}>
@@ -94,7 +101,7 @@ export default function HomeScreen() {
       </View>
 
       {/* Balance */}
-      <TouchableOpacity activeOpacity={0.85} onPress={() => router.push('/settle')}>
+      <TouchableOpacity activeOpacity={0.85} onPress={() => router.push('/app/settle')}>
         <View style={[styles.balance, { backgroundColor: owed ? Pastel.mint.bg : Pastel.rose.bg }]}>
           <View style={{ flex: 1 }}>
             <Text style={[styles.balanceLabel, { color: owed ? Pastel.mint.ink : Pastel.rose.ink }]}>
@@ -123,12 +130,12 @@ export default function HomeScreen() {
       {/* Album preview */}
       <View style={styles.sectionRow}>
         <Text style={styles.sectionTitle}>House album</Text>
-        <TouchableOpacity onPress={() => router.push('/(tabs)/notes')}>
+        <TouchableOpacity onPress={() => router.push('/app/notes')}>
           <Text style={styles.seeAll}>See all</Text>
         </TouchableOpacity>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.albumRow}>
-        <TouchableOpacity style={styles.albumAdd} onPress={() => router.push('/(tabs)/notes')}>
+        <TouchableOpacity style={styles.albumAdd} onPress={() => router.push('/app/notes')}>
           <Ionicons name="add" size={26} color={Colors.primary} />
           <Text style={styles.albumAddText}>Add photo</Text>
         </TouchableOpacity>
@@ -141,14 +148,14 @@ export default function HomeScreen() {
       <Text style={styles.sectionTitle}>Today</Text>
       <View style={styles.nudgeRow}>
         {myChores.length > 0 && (
-          <TouchableOpacity style={[styles.nudge, { backgroundColor: Pastel.lavender.bg }]} onPress={() => router.push('/(tabs)/chores')}>
+          <TouchableOpacity style={[styles.nudge, { backgroundColor: Pastel.lavender.bg }]} onPress={() => router.push('/app/chores')}>
             <Text style={styles.nudgeEmoji}>🧽</Text>
             <Text style={styles.nudgeText}>{myChores.length} chore{myChores.length !== 1 ? 's' : ''} for you</Text>
             <Ionicons name="chevron-forward" size={16} color={Pastel.lavender.ink} />
           </TouchableOpacity>
         )}
         {pendingItems > 0 && (
-          <TouchableOpacity style={[styles.nudge, { backgroundColor: Pastel.peach.bg }]} onPress={() => router.push('/(tabs)/shopping')}>
+          <TouchableOpacity style={[styles.nudge, { backgroundColor: Pastel.peach.bg }]} onPress={() => router.push('/app/shopping')}>
             <Text style={styles.nudgeEmoji}>🛒</Text>
             <Text style={styles.nudgeText}>{pendingItems} item{pendingItems !== 1 ? 's' : ''} to buy</Text>
             <Ionicons name="chevron-forward" size={16} color={Pastel.peach.ink} />
@@ -189,7 +196,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   screen:        { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 62, marginBottom: 18 },
+  header:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 18 },
   headerRight:   { flexDirection: 'row', alignItems: 'center', gap: 10 },
   iconBtn:       { width: 42, height: 42, borderRadius: 21, backgroundColor: Colors.card, alignItems: 'center', justifyContent: 'center', ...Shadow.sm },
   greeting:      { fontSize: 14, color: Colors.textSub, fontWeight: '600' },

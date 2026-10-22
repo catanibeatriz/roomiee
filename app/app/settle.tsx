@@ -114,7 +114,7 @@ export default function SettleScreen() {
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 20 },
+  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 20 },
   backBtn:      { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   title:        { fontSize: 22, fontWeight: '800', color: Colors.text },
   sectionTitle: { fontSize: 16, fontWeight: '700', color: Colors.text, marginBottom: 12 },

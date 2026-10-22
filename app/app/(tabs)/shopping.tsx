@@ -27,7 +27,7 @@ export default function ShoppingScreen() {
   const atListLimit = !isPro && shoppingLists.length >= FREE_LIMITS.shoppingLists;
 
   function handleNewList() {
-    if (atListLimit) { router.push('/paywall'); return; }
+    if (atListLimit) { router.push('/app/paywall'); return; }
     setShowNewList(true);
   }
 
@@ -137,7 +137,7 @@ export default function ShoppingScreen() {
 
 const styles = StyleSheet.create({
   screen:      { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 16 },
+  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 16 },
   pageTitle:   { fontSize: 28, fontWeight: '800', color: Colors.text },
   addBtn:      { backgroundColor: Colors.primary, borderRadius: Radius.full, width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   tabsScroll:  { flexGrow: 0, marginBottom: 16 },

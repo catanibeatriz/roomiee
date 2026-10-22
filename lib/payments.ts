@@ -1,4 +1,5 @@
-import { Linking, Alert } from 'react-native';
+import { Linking } from 'react-native';
+import { Alert } from '@/lib/alert';
 import * as Clipboard from 'expo-clipboard';
 import { Currency, formatMoney } from './currency';
 

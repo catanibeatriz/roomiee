@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Alert } from 'react-native';
+import { Alert } from '@/lib/alert';
 import uuid from 'react-native-uuid';
 import { Currency, Rates, fetchRates, convert, FALLBACK_RATES } from '@/lib/currency';
 import { supabase } from '@/lib/supabase';
@@ -179,6 +179,9 @@ const EMPTY_USER: CurrentUser = {
 
 type Store = {
   // Session & loading
+  authReady: boolean;           // we've checked whether someone is logged in
+  userId: string | null;        // the logged-in Supabase user, if any
+  setAuth: (userId: string | null) => void;
   loaded: boolean;              // house data loaded for the signed-in user
   houseId: string | null;
   inviteCode: string;
@@ -296,6 +299,16 @@ export const useStore = create<Store>((set, get) => {
     ...HOUSE_DEFAULTS,
     rates: FALLBACK_RATES,
     ratesUpdatedAt: null,
+    authReady: false,
+    userId: null,
+
+    setAuth: (userId) => {
+      const changed = userId !== get().userId;
+      set({ authReady: true, userId });
+      if (!changed) return;
+      get().reset();
+      if (userId) get().loadHouse(userId);
+    },
 
     reset: () => set({ ...HOUSE_DEFAULTS }),
 
@@ -332,6 +345,16 @@ export const useStore = create<Store>((set, get) => {
         .map((m: any) => m.profiles).filter(Boolean)
         .map((p: any, i: number) => ({ ...toRoommate(p), color: p.color !== '#4DA3FF' ? p.color : AvatarColors[i % AvatarColors.length] }));
       const meRow = roommates.find((r) => r.id === userId);
+
+      // New accounts are named after their email ("ana.garcia99"); turn that
+      // into a friendly first name once. Users can change it in Settings.
+      if (meRow && /[._\d]/.test(meRow.name)) {
+        const first = meRow.name.split(/[._\d]+/).find(Boolean) ?? meRow.name;
+        const nice = first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+        meRow.name = nice;
+        meRow.avatar = nice[0].toUpperCase();
+        db().from('profiles').update({ name: nice }).eq('id', userId).then(() => {});
+      }
       const prevReminders = new Map(get().bills.map((b) => [b.id, b.notificationId]));
 
       set({

@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import {
-  ScrollView, View, Text, StyleSheet, TouchableOpacity, Switch,
-  TextInput, Modal, KeyboardAvoidingView, Platform, Alert,
-} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Switch, TextInput, Modal, KeyboardAvoidingView, Platform } from 'react-native';
+import { Alert } from '@/lib/alert';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useStore, Bill, GuestPeriod, Roommate, computeGuestImpact, daysBetween } from '@/store';
@@ -96,7 +94,7 @@ export default function BillsScreen() {
       </Text>
 
       {!isPro ? (
-        <TouchableOpacity style={styles.lockedCard} onPress={() => router.push('/paywall')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.lockedCard} onPress={() => router.push('/app/paywall')} activeOpacity={0.9}>
           <Ionicons name="lock-closed" size={18} color={Colors.primary} />
           <Text style={styles.lockedText}>Unlock fair guest-period billing with Roomiee Pro</Text>
         </TouchableOpacity>
@@ -230,7 +228,7 @@ function ordinal(n: number) {
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 8 },
+  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 8 },
   backBtn:      { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   title:        { fontSize: 22, fontWeight: '800', color: Colors.text },
   sectionTitle: { fontSize: 17, fontWeight: '700', color: Colors.text },

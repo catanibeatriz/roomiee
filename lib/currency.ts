@@ -25,7 +25,7 @@ export const FALLBACK_RATES: Rates = {
 export async function fetchRates(): Promise<Rates> {
   try {
     const symbols = CURRENCIES.map((c) => c.code).filter((c) => c !== 'EUR').join(',');
-    const res = await fetch(`https://api.frankfurter.app/latest?base=EUR&symbols=${symbols}`);
+    const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=EUR&symbols=${symbols}`);
     if (!res.ok) throw new Error('rate fetch failed');
     const json = (await res.json()) as { rates: Rates };
     return { EUR: 1, ...json.rates };

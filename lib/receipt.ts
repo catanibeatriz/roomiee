@@ -1,5 +1,5 @@
-import * as ImagePicker from 'expo-image-picker';
 import { Currency } from './currency';
+import { pickPhoto } from './photos';
 import { Expense } from '@/store';
 
 // ─── Receipt scanning (Pro feature) ──────────────────────────────────────────
@@ -12,20 +12,9 @@ export type ScannedReceipt = {
   items: { name: string; price: number }[];
 };
 
-/** Open the camera (falls back to photo library) and return the image URI. */
-export async function captureReceipt(): Promise<string | null> {
-  const cam = await ImagePicker.requestCameraPermissionsAsync();
-  const picker = cam.granted
-    ? ImagePicker.launchCameraAsync
-    : ImagePicker.launchImageLibraryAsync;
-
-  const result = await picker({
-    mediaTypes: ['images'],
-    quality: 0.6,
-    allowsEditing: true,
-  });
-  if (result.canceled || !result.assets?.length) return null;
-  return result.assets[0].uri;
+/** Photograph or pick a receipt; returns it as a storable data URL. */
+export function captureReceipt(): Promise<string | null> {
+  return pickPhoto({ title: 'Scan a receipt' });
 }
 
 // Realistic Madrid-area receipts for the demo. Swap `scanReceipt` for a real

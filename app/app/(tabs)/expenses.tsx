@@ -32,7 +32,7 @@ export default function ExpensesScreen() {
   const [photo, setPhoto] = useState<string | undefined>();
 
   async function handleScanReceipt() {
-    if (!isPro) { router.push('/paywall'); return; }
+    if (!isPro) { router.push('/app/paywall'); return; }
     const uri = await captureReceipt();
     if (!uri) return;
     setScanning(true);
@@ -114,7 +114,7 @@ export default function ExpensesScreen() {
         )}
 
         {hiddenCount > 0 && (
-          <TouchableOpacity style={styles.historyLock} onPress={() => router.push('/paywall')} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.historyLock} onPress={() => router.push('/app/paywall')} activeOpacity={0.85}>
             <Ionicons name="lock-closed" size={16} color={Colors.primary} />
             <Text style={styles.historyLockText}>
               {hiddenCount} older expense{hiddenCount !== 1 ? 's' : ''} hidden — unlock full history with Pro
@@ -166,7 +166,7 @@ export default function ExpensesScreen() {
                     {currencyMeta(baseCurrency).flag} {baseCurrency}
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.lockHint} onPress={() => router.push('/paywall')}>
+                <TouchableOpacity style={styles.lockHint} onPress={() => router.push('/app/paywall')}>
                   <Ionicons name="lock-closed" size={13} color={Colors.primary} />
                   <Text style={styles.lockHintText}>Add expenses in other currencies with Roomiee Pro</Text>
                 </TouchableOpacity>
@@ -267,7 +267,7 @@ function ExpenseRow({ expense: e, roommates, viewerCurrency, rates, onSettle, se
 
 const styles = StyleSheet.create({
   screen:      { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 20 },
+  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 20 },
   pageTitle:   { fontSize: 28, fontWeight: '800', color: Colors.text },
   addBtn:      { backgroundColor: Colors.primary, borderRadius: Radius.full, width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   sectionLabel:{ fontSize: 13, fontWeight: '600', color: Colors.textSub, marginBottom: 8 },

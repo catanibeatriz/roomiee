@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
+import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Alert } from '@/lib/alert';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@/store';
@@ -33,16 +34,17 @@ export default function SettingsScreen() {
   const [revolut, setRevolut] = useState(currentUser.revolutTag ?? '');
   const [saved, setSaved] = useState(false);
 
-  const { roommates } = useStore();
+  const { roommates, inviteCode, setProfileName } = useStore();
+  const [name, setName] = useState(currentUser.name);
 
   function inviteRoommate() {
     // Free houses are capped; Pro lifts the limit.
     if (!isPro && roommates.length >= FREE_LIMITS.roommates) {
-      router.push('/paywall');
+      router.push('/app/paywall');
       return;
     }
     // Real invite links arrive with the backend; here we preview the flow.
-    Alert.alert('Invite a roommate', 'Share your house invite code:\n\nROOMIEE-7F3A\n\n(Live invite links arrive with the backend.)');
+    Alert.alert('Invite a roommate', `Ask them to sign up on Roomiee and enter this invite code on their Home screen:\n\n${inviteCode}`);
   }
 
   function saveHandles() {
@@ -76,7 +78,16 @@ export default function SettingsScreen() {
           <Avatar roommate={currentUser} size={96} ring />
           <View style={styles.cameraBadge}><Ionicons name="camera" size={15} color="#fff" /></View>
         </TouchableOpacity>
-        <Text style={styles.profileName}>{currentUser.name}</Text>
+        <TextInput
+          style={styles.nameInput}
+          value={name}
+          onChangeText={setName}
+          onBlur={() => { if (name.trim() && name.trim() !== currentUser.name) setProfileName(name.trim()); }}
+          onSubmitEditing={() => { if (name.trim()) setProfileName(name.trim()); }}
+          placeholder="Your name"
+          placeholderTextColor={Colors.textSub}
+          accessibilityLabel="Your name"
+        />
         <Text style={styles.profileEmail}>{currentUser.email}</Text>
         {currentUser.photo && (
           <TouchableOpacity onPress={() => setProfilePhoto(currentUser.id, undefined)}>
@@ -115,7 +126,7 @@ export default function SettingsScreen() {
           <Text style={styles.proActiveText}>Roomiee Pro is active for your house ✨</Text>
         </View>
       ) : (
-        <TouchableOpacity style={styles.proCard} onPress={() => router.push('/paywall')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.proCard} onPress={() => router.push('/app/paywall')} activeOpacity={0.9}>
           <View style={{ flex: 1 }}>
             <Text style={styles.proTitle}>Upgrade to Roomiee Pro</Text>
             <Text style={styles.proSub}>Analytics, receipt scanning, multi-currency & more</Text>
@@ -125,7 +136,7 @@ export default function SettingsScreen() {
       )}
 
       {/* Insights link */}
-      <TouchableOpacity style={[styles.linkRow, { marginBottom: 10 }]} onPress={() => router.push('/insights')}>
+      <TouchableOpacity style={[styles.linkRow, { marginBottom: 10 }]} onPress={() => router.push('/app/insights')}>
         <Ionicons name="bar-chart-outline" size={20} color={Colors.primary} />
         <Text style={styles.linkText}>Spending insights</Text>
         {!isPro && <View style={styles.proPill}><Text style={styles.proPillText}>PRO</Text></View>}
@@ -158,7 +169,7 @@ export default function SettingsScreen() {
           />
         </Card>
       ) : (
-        <TouchableOpacity style={styles.lockedCard} onPress={() => router.push('/paywall')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.lockedCard} onPress={() => router.push('/app/paywall')} activeOpacity={0.9}>
           <Ionicons name="lock-closed" size={18} color={Colors.primary} />
           <Text style={styles.lockedCardText}>Personal currency conversion is a Pro feature</Text>
           <View style={styles.proPill}><Text style={styles.proPillText}>PRO</Text></View>
@@ -225,7 +236,7 @@ function CurrencyGrid({ selected, onSelect }: { selected: Currency; onSelect: (c
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 20 },
+  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 20 },
   backBtn:      { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   title:        { fontSize: 22, fontWeight: '800', color: Colors.text },
   sectionTitle: { fontSize: 16, fontWeight: '700', color: Colors.text, marginBottom: 4 },
@@ -251,6 +262,7 @@ const styles = StyleSheet.create({
   proPillText:  { fontSize: 10, fontWeight: '800', color: '#fff' },
   profile:      { alignItems: 'center', marginBottom: 24 },
   cameraBadge:  { position: 'absolute', right: 0, bottom: 2, width: 30, height: 30, borderRadius: 15, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center', borderWidth: 2.5, borderColor: Colors.bg },
+  nameInput:    { fontSize: 22, fontWeight: '800', color: Colors.text, marginTop: 12, textAlign: 'center', borderBottomWidth: 1.5, borderBottomColor: Colors.border, paddingVertical: 4, paddingHorizontal: 12, minWidth: 160 },
   profileName:  { fontSize: 22, fontWeight: '800', color: Colors.text, marginTop: 12 },
   profileEmail: { fontSize: 13, color: Colors.textSub, marginTop: 2 },
   removeLink:   { fontSize: 13, fontWeight: '700', color: Colors.danger, marginTop: 8, textAlign: 'center' },

@@ -191,7 +191,7 @@ function FoodOrderCard({ order, roommates, onSettle }: {
 
 const styles = StyleSheet.create({
   screen:      { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 20 },
+  header:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 20 },
   pageTitle:   { fontSize: 28, fontWeight: '800', color: Colors.text },
   addBtn:      { backgroundColor: Colors.primary, borderRadius: Radius.full, width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   empty:       { textAlign: 'center', color: Colors.textSub, marginTop: 40, fontSize: 16 },

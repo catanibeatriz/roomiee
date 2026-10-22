@@ -76,7 +76,7 @@ export default function PaywallScreen() {
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  close:        { alignSelf: 'flex-end', marginTop: 56, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
+  close:        { alignSelf: 'flex-end', marginTop: 4, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   hero:         { alignItems: 'center', marginBottom: 24 },
   title:        { fontSize: 30, fontWeight: '800', color: Colors.text, marginTop: 12 },
   sub:          { fontSize: 14, color: Colors.textSub, marginTop: 4, textAlign: 'center' },

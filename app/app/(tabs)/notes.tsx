@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import {
-  ScrollView, View, Text, StyleSheet, TouchableOpacity, Modal, Image,
-  TextInput, KeyboardAvoidingView, Platform, Alert, useWindowDimensions,
-} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Modal, Image, TextInput, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
+import { Alert } from '@/lib/alert';
 import { Ionicons } from '@expo/vector-icons';
 import { useStore, HouseNote, AlbumPhoto } from '@/store';
 import { pickPhoto } from '@/lib/photos';
@@ -232,7 +230,7 @@ export default function BoardScreen() {
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 62, marginBottom: 14 },
+  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 14 },
   pageTitle:    { fontSize: 30, fontWeight: '800', color: Colors.text, letterSpacing: -0.5 },
   addBtn:       { backgroundColor: Colors.primary, borderRadius: Radius.full, width: 46, height: 46, alignItems: 'center', justifyContent: 'center', ...Shadow.sm, shadowColor: Colors.primary, shadowOpacity: 0.3 },
 

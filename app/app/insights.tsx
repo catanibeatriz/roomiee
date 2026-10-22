@@ -21,7 +21,7 @@ export default function InsightsScreen() {
           <Ionicons name="lock-closed" size={48} color={Colors.primary} />
           <Text style={styles.lockedTitle}>Insights is a Pro feature</Text>
           <Text style={styles.lockedSub}>See where your house spends, by category and by person.</Text>
-          <TouchableOpacity style={styles.unlockBtn} onPress={() => router.push('/paywall')}>
+          <TouchableOpacity style={styles.unlockBtn} onPress={() => router.push('/app/paywall')}>
             <Text style={styles.unlockText}>Unlock with Roomiee Pro</Text>
           </TouchableOpacity>
         </View>
@@ -98,7 +98,7 @@ function Header() {
 
 const styles = StyleSheet.create({
   screen:       { flex: 1, backgroundColor: Colors.bg, paddingHorizontal: 20 },
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 60, marginBottom: 20 },
+  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, marginBottom: 20 },
   backBtn:      { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   title:        { fontSize: 22, fontWeight: '800', color: Colors.text },
   locked:       { flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 80 },
